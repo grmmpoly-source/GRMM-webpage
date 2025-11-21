@@ -1,0 +1,110 @@
+/* Reset e estilos base */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+body {
+  margin: 0;                    /* Remove a margem padrão do corpo */
+  font-family: Georgia, serif;  /* Define a fonte geral do site */
+  display: flex;                /* Define layout flexível para o body */
+  min-height: 100vh;            /* Altura mínima: 100% da altura da viewport */
+  overflow: hidden;             /* Adicione para controlar overflow vertical */
+}
+
+nav {
+  width: 220px;                /* Largura fixa da barra lateral de navegação */
+  height: 100vh;               /* altura fixa: 100% da altura da janela */
+  background-color: #222;      /* Cor de fundo (cinza muito escuro) */
+  color: white;                /* Cor do texto dentro do menu */
+  padding: 20px;               /* Espaçamento interno (espaço entre borda e conteúdo) */
+  box-sizing: border-box;      /* Padding é incluído na largura total */
+  overflow-y: auto;            /* permite rolar se o conteúdo do nav for maior que a tela */
+  flex-shrink: 0;              /* impede que o nav encolha */
+}
+
+nav ul {
+  list-style: none;            /* Remove os marcadores de lista (bolinhas) */
+  padding: 0;                  /* Remove padding padrão da lista */
+  margin: 0;                   /* Remove margem padrão da lista */
+}
+
+nav ul li {
+  margin-bottom: 15px;         /* Espaçamento vertical entre itens da lista */
+}
+
+nav ul li a {
+  color: white;                /* Cor do texto dos links do menu */
+  text-decoration: none;       /* Remove sublinhado dos links */
+  font-weight: normal;           /* Texto sem negrito */
+  cursor: pointer;             /* Cursor muda para "mãozinha" ao passar */
+  display: block;              /* O link ocupa toda a largura do item */
+  padding: 8px 12px;           /* Espaçamento interno para área clicável */
+  border-radius: 4px;          /* Bordas arredondadas nos links */
+  transition: background-color 0.3s ease; /* Animação suave para mudança de fundo */
+  font-family: 'Merriweather', serif;
+  text-transform: uppercase;   /* deixa em MAIÚSCULAS */
+}
+
+
+
+nav ul li a:hover,
+nav ul li a.active {
+  background-color: #555;      /* Cor de fundo para hover e item ativo (cinza médio) */
+}
+
+main {
+  flex-grow: 1;                /* Ocupa todo espaço restante horizontal */
+  padding: 20px;               /* Espaçamento interno no conteúdo principal */
+  box-sizing: border-box;      /* Padding incluso no cálculo de largura */
+  height: 100vh;               /* Faz o main ter altura fixa igual à viewport */
+  overflow-y: auto;            /* Se conteúdo for maior, ativa rolagem vertical */
+}
+
+main section {
+  display: none;               /* Todas as seções estão escondidas inicialmente */
+}
+
+main section.active {
+  display: block;              /* Apenas a seção ativa fica visível */
+}
+
+/* Estilos para membros, publicações e itens de pesquisa */
+.member, .publications > div, .research-item {
+  margin-bottom: 100px;         /* Espaçamento entre esses blocos */
+}
+
+.member-section-title {
+  background-color: #f5f5f5;   /* fundo cinza claro */
+  padding: 10px 15px;          /* espaçamento interno */
+  margin: 30px 0 20px 0;       /* margem acima e abaixo */
+  font-size: 1.3em;            /* tamanho da fonte */
+  font-weight: bold;           /* negrito */
+  border-radius: 4px;          /* cantos arredondados (opcional) */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* sombra sutil */
+}
+
+.research-item {
+  display: flex;               /* Layout flexível para alinhar imagem e texto lado a lado */
+  gap: 25px;                  /* Espaçamento entre imagem e texto */
+  align-items: center;        /* Agora centraliza verticalmente */
+}
+
+.research-item img {
+  width: 350px;                /* Largura fixa para as imagens dos projetos */
+  height: auto;                /* Altura automática para manter proporção */
+  border-radius: 5px;          /* Bordas arredondadas nas imagens */
+}
+
+.research-text p {
+  margin: 0 0 10px 0;          /* Margem inferior para espaçar parágrafos */
+}
+
+/* Estilo para os textos com classe degree (ex: grau acadêmico) */
+.degree {
+  font-style: italic;          /* Texto em itálico */
+  font-weight: normal;         /* Peso normal (não negrito) */
+  font-size: 0.9em;            /* Fonte um pouco menor */
+  color: #555;                 /* Cor cinza para diferenciar do texto padrão */
+}
+
+/* Pequenos ajustes para os links do menu */
+.menu-link {
+  user-select: none;           /* Impede seleção do texto do link com o mouse */
+}
