@@ -1,110 +1,316 @@
-/* Reset e estilos base */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+/* Reset */
+* {
+ margin: 0;                    /* Remove margens padrão */
+ padding: 0;                   /* Remove paddings padrão */
+ box-sizing: border-box;       /* Define box-sizing para border-box para todos os elementos */
+}
+
+/* Variables */
+:root {
+  /* text and spacing */
+  --ff: 'Merriweather', serif;
+  --ff2: 'Georgia', serif;
+  --p: 1rem/1.5em var(--ff);
+  --h1: 600 3rem/1.2em var(--ff2);
+  --h2: 600 2rem/1.2em var(--ff2);
+  --spacing1: 4px;
+  --spacing2: 8px;
+  --spacing3: 16px;
+  --spacing4: 20px;
+  --spacing5: 40px;
+  --spacing6: 80px;
+  --spacing7: 160px;
+  /* hsl (fallback color) */
+  --bg-dark: hsl(4 100% 2%);
+  --bg: hsl(10 92% 5%);
+  --bg-light: hsl(16 67% 9%);
+  --text: hsl(16 100% 96%);
+  --text-muted: hsl(16 56% 71%);
+  --highlight: hsl(16 37% 39%);
+  --border: hsl(16 50% 28%);
+  --border-muted: hsl(18 80% 17%);
+  --primary: hsl(16 69% 70%);
+  --secondary: hsl(194 66% 62%);
+  --danger: hsl(9 42% 65%);
+  --warning: hsl(51 29% 53%);
+  --success: hsl(148 27% 56%);
+  --info: hsl(217 46% 66%);
+  /* oklch */
+  --bg-dark: oklch(0.1 0.04 41);
+  --bg: oklch(0.15 0.04 41);
+  --bg-light: oklch(0.2 0.04 41);
+  --text: oklch(0.96 0.08 41);
+  --text-muted: oklch(0.76 0.08 41);
+  --highlight: oklch(0.5 0.08 41);
+  --border: oklch(0.4 0.08 41);
+  --border-muted: oklch(0.3 0.08 41);
+  --primary: oklch(0.76 0.1 41);
+  --secondary: oklch(0.76 0.1 221);
+  --danger: oklch(0.7 0.08 30);
+  --warning: oklch(0.7 0.08 100);
+  --success: oklch(0.7 0.08 160);
+  --info: oklch(0.7 0.08 260);
+}
+body.light {
+  /* hsl (fallback color) */
+  --bg-dark: hsl(16 93% 91%);
+  --bg: hsl(16 100% 96%);
+  --bg-light: hsl(16 100% 100%);
+  --text: hsl(1 100% 6%);
+  --text-muted: hsl(16 50% 28%);
+  --highlight: hsl(16 100% 100%);
+  --border: hsl(16 31% 51%);
+  --border-muted: hsl(16 44% 63%);
+  --primary: hsl(17 66% 27%);
+  --secondary: hsl(191 100% 14%);
+  --danger: hsl(8 32% 41%);
+  --warning: hsl(51 46% 30%);
+  --success: hsl(150 37% 33%);
+  --info: hsl(217 34% 43%);
+  /* oklch */
+  --bg-dark: oklch(0.92 0.04 41);
+  --bg: oklch(0.96 0.04 41);
+  --bg-light: oklch(1 0.04 41);
+  --text: oklch(0.15 0.08 41);
+  --text-muted: oklch(0.4 0.08 41);
+  --highlight: oklch(1 0.08 41);
+  --border: oklch(0.6 0.08 41);
+  --border-muted: oklch(0.7 0.08 41);
+  --primary: oklch(0.4 0.1 41);
+  --secondary: oklch(0.4 0.1 221);
+  --danger: oklch(0.5 0.08 30);
+  --warning: oklch(0.5 0.08 100);
+  --success: oklch(0.5 0.08 160);
+  --info: oklch(0.5 0.08 260);
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;     /* Suaviza a rolagem ao navegar entre seções */
+}
 body {
-  margin: 0;                    /* Remove a margem padrão do corpo */
-  font-family: Georgia, serif;  /* Define a fonte geral do site */
-  display: flex;                /* Define layout flexível para o body */
-  min-height: 100vh;            /* Altura mínima: 100% da altura da viewport */
-  overflow: hidden;             /* Adicione para controlar overflow vertical */
+  text-wrap: balance;         /* Melhora a legibilidade do texto */
+  font: var(--p);
+  background: var(--bg);
+  color: var(--text);
+}
+h1 {
+  font: var(--h1);
+}
+h2 {
+  font: var(--h2);
+  margin: var(--spacing2) 0;
+}
+p {
+  margin: var(--spacing2) 0;
+}
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--text-muted);
+}
+.btn, button {
+  all: unset;                   /* Remove estilos padrão de botões */
+  display: inline-block;
+  margin: var(--spacing2) 0;
+  background: var(--bg-light);
+  padding: var(--spacing2) var(--spacing3);
+  color: var(--text);
+  border-radius: var(--spacing2);
+  border-bottom: solid var(--spacing1) var(--border-muted);
+  font: var(--p);
+  cursor: pointer;
+}
+.btn:hover, button:hover {
+  background: linear-gradient(180deg, var(--bg-light), var(--bg-dark));
+  transition: 0.3s ease-in-out;
+}
+img {
+  width: 100%;                 /* Imagens ocupam 100% da largura do contêiner pai */
+}
+
+/* Utility Classes */
+section {
+ width: 90%;
+ max-width: 1080px;
+ margin: 0 auto;              /* Centraliza as seções horizontalmente */
+}
+.center {
+  text-align: center;          /* Centraliza o texto */
+}
+.hidden {
+  display: none;               /* Esconde o elemento */
+}
+.flex {
+  display: flex;               /* Define layout flexível */
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing4);
+  flex-wrap: wrap;
+}
+.flex > * {
+  flex: 1;
+  min-width: 400px;
+}
+.reverse {
+  flex-direction: row-reverse; /* Inverte a ordem dos itens no flex */
+}
+.padding1 {
+  padding: var(--spacing1) 0;    /* Adiciona espaçamento interno */
+}
+.padding2 {
+  padding: var(--spacing2) 0;    /* Adiciona espaçamento interno */
+}
+.padding3 {
+  padding: var(--spacing3) 0;    /* Adiciona espaçamento interno */
+}
+.padding4 {
+  padding: var(--spacing4) 0;    /* Adiciona espaçamento interno */
+}
+.padding5 {
+  padding: var(--spacing5) 0;    /* Adiciona espaçamento interno */
+}
+.padding6 {
+  padding: var(--spacing6) 0;    /* Adiciona espaçamento interno */
+}
+.padding7 {
+  padding: var(--spacing7) 0;    /* Adiciona espaçamento interno */
+}
+.margin1 {
+  margin: var(--spacing1) auto;     /* Adiciona margems */
+}
+.margin2 {
+  margin: var(--spacing2) auto;     
+}
+.margin3 {
+  margin: var(--spacing3) auto;    
+}
+.margin4 {
+  margin: var(--spacing4) auto;     
+}
+.margin5 {
+  margin: var(--spacing5) auto;     
+}
+.margin6 {
+  margin: var(--spacing6) auto;     
+}
+.margin7 {
+  margin: var(--spacing7) auto;     
+}
+
+/* header */
+header {
+  width: 90%;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: var(--spacing4) 0;
 }
 
 nav {
-  width: 220px;                /* Largura fixa da barra lateral de navegação */
-  height: 100vh;               /* altura fixa: 100% da altura da janela */
-  background-color: #222;      /* Cor de fundo (cinza muito escuro) */
-  color: white;                /* Cor do texto dentro do menu */
-  padding: 20px;               /* Espaçamento interno (espaço entre borda e conteúdo) */
-  box-sizing: border-box;      /* Padding é incluído na largura total */
-  overflow-y: auto;            /* permite rolar se o conteúdo do nav for maior que a tela */
-  flex-shrink: 0;              /* impede que o nav encolha */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing5);
+}
+.ham {
+  display: none;
+  width: auto;
+  height: 35px;
+  object-fit: contain;
+  cursor: pointer;
+  filter: invert(20%) sepia(50%) saturate(450%) hue-rotate(349deg) brightness(85%) contrast(85%);
+}
+.logo {
+  width: auto;
+  height: 60px;
+  object-fit: contain;
 }
 
-nav ul {
-  list-style: none;            /* Remove os marcadores de lista (bolinhas) */
-  padding: 0;                  /* Remove padding padrão da lista */
-  margin: 0;                   /* Remove margem padrão da lista */
+/* main section */
+.main-section {
+  margin: var(--spacing7) auto var(--spacing6) auto;
+  text-align: center;
+  padding: var(--spacing6) 0;
+  background: var(--bg-light);
+}
+.main-section h2 {
+  font: var(--h1);
 }
 
-nav ul li {
-  margin-bottom: 15px;         /* Espaçamento vertical entre itens da lista */
+/* footer */
+footer {
+  background: var(--bg-light);
+  padding: var(--spacing5) 0 var(--spacing5) 0;
 }
-
-nav ul li a {
-  color: white;                /* Cor do texto dos links do menu */
-  text-decoration: none;       /* Remove sublinhado dos links */
-  font-weight: normal;           /* Texto sem negrito */
-  cursor: pointer;             /* Cursor muda para "mãozinha" ao passar */
-  display: block;              /* O link ocupa toda a largura do item */
-  padding: 8px 12px;           /* Espaçamento interno para área clicável */
-  border-radius: 4px;          /* Bordas arredondadas nos links */
-  transition: background-color 0.3s ease; /* Animação suave para mudança de fundo */
-  font-family: 'Merriweather', serif;
-  text-transform: uppercase;   /* deixa em MAIÚSCULAS */
+.footer {
+  width: 100%;
+  max-width: 1080px;
+  margin: auto;
+  display: grid;
+  grid-template-columns:1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+  "footer-upper"
+  "footer-bottom";
+  gap: var(--spacing2);
+  justify-content: space-between;
 }
-
-
-
-nav ul li a:hover,
-nav ul li a.active {
-  background-color: #555;      /* Cor de fundo para hover e item ativo (cinza médio) */
+.footer-upper {
+  display: flex;
+  justify-content:space-around;
+  flex-wrap: wrap;
+  gap: var(--spacing4);
 }
-
-main {
-  flex-grow: 1;                /* Ocupa todo espaço restante horizontal */
-  padding: 20px;               /* Espaçamento interno no conteúdo principal */
-  box-sizing: border-box;      /* Padding incluso no cálculo de largura */
-  height: 100vh;               /* Faz o main ter altura fixa igual à viewport */
-  overflow-y: auto;            /* Se conteúdo for maior, ativa rolagem vertical */
+.footer-bottom {
+  grid-area: footer-bottom;
+  text-align: center;
+  margin-top: var(--spacing1);
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
-
-main section {
-  display: none;               /* Todas as seções estão escondidas inicialmente */
+.footer-left {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing3);
+  justify-content: center;
 }
-
-main section.active {
-  display: block;              /* Apenas a seção ativa fica visível */
+.footer-right{
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing3);
 }
-
-/* Estilos para membros, publicações e itens de pesquisa */
-.member, .publications > div, .research-item {
-  margin-bottom: 100px;         /* Espaçamento entre esses blocos */
+.social-media {
+  width: 32px;
+  filter: invert(20%) sepia(50%) saturate(450%) hue-rotate(349deg) brightness(85%) contrast(85%);
 }
-
-.member-section-title {
-  background-color: #f5f5f5;   /* fundo cinza claro */
-  padding: 10px 15px;          /* espaçamento interno */
-  margin: 30px 0 20px 0;       /* margem acima e abaixo */
-  font-size: 1.3em;            /* tamanho da fonte */
-  font-weight: bold;           /* negrito */
-  border-radius: 4px;          /* cantos arredondados (opcional) */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* sombra sutil */
-}
-
-.research-item {
-  display: flex;               /* Layout flexível para alinhar imagem e texto lado a lado */
-  gap: 25px;                  /* Espaçamento entre imagem e texto */
-  align-items: center;        /* Agora centraliza verticalmente */
-}
-
-.research-item img {
-  width: 350px;                /* Largura fixa para as imagens dos projetos */
-  height: auto;                /* Altura automática para manter proporção */
-  border-radius: 5px;          /* Bordas arredondadas nas imagens */
-}
-
-.research-text p {
-  margin: 0 0 10px 0;          /* Margem inferior para espaçar parágrafos */
-}
-
-/* Estilo para os textos com classe degree (ex: grau acadêmico) */
-.degree {
-  font-style: italic;          /* Texto em itálico */
-  font-weight: normal;         /* Peso normal (não negrito) */
-  font-size: 0.9em;            /* Fonte um pouco menor */
-  color: #555;                 /* Cor cinza para diferenciar do texto padrão */
-}
-
-/* Pequenos ajustes para os links do menu */
-.menu-link {
-  user-select: none;           /* Impede seleção do texto do link com o mouse */
+@media (max-width: 50rem) {
+  .ham {
+    display: block;
+  }
+  nav {
+    display: none;
+  }
+  nav.show {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--spacing6);
+    right: 0px;
+    background: var(--bg-light);
+    padding: var(--spacing4);
+    gap: var(--spacing4);
+    border-radius: var(--spacing2);
+  }
+  .footer {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "footer-left"
+    "footer-right"
+    "footer-bottom";
+  }
 }
