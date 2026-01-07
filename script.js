@@ -6,16 +6,20 @@ class THeader extends HTMLElement {
             <img class="logo" src="img/grmm-logo.jpg" />
             <img src="img/line-columns-svgrepo-com.svg" class="ham" />
             <nav>
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Contact</a>
-                <a class="btn" href="#">Get a Quote</a>
+                <a href="index.html">Home</a>
+                <a href="index.html">About GRMM</a>
+                <a href="#">Research</a>
+                <a href="members.html">Members</a>
+                <a href="publications.html">Publications</a>
+                <a href="#">Teaching</a>
             </nav>
         </header>
         `;
     }
 }
+
+// <a class="btn" href="#">Get a Quote</a>
+
 customElements.define('t-header', THeader);
 
 // section
@@ -27,19 +31,68 @@ class TSection extends HTMLElement {
         const link = this.getAttribute('link');
         const linkText = this.getAttribute('link-text');
         const img = this.getAttribute('img');
+
+        const showButton = this.hasAttribute('show-button');
+        const showImage = this.hasAttribute('show-image');
+
+        const buttonHTML = showButton && link && linkText
+            ? `<a class="btn" href="${link}">${linkText}</a>`
+            : '';
+
+        const imageHTML = showImage && img
+            ? `<img src="${img}" alt="">`
+            : '';
+
         this.innerHTML = `<section class="${selector}">
             <div class="primary">
                 <h2>${heading}</h2>
                 <p>
                     ${details}
                 </p>
-                <a class="btn" href="${link}">${linkText}</a>
+                ${buttonHTML}
             </div>
-            <img src="${img}" />
+            ${imageHTML}
         </section>`;
     }
 }
 customElements.define('t-section', TSection);
+
+// section members
+class TMember extends HTMLElement {
+    connectedCallback() {
+        const selector = this.getAttribute('selector');
+        const heading = this.getAttribute('heading');
+        const details = this.getAttribute('details');
+        const link = this.getAttribute('link');
+        const imageFile = this.getAttribute('imageFile');
+
+        const showButton = this.hasAttribute('show-button');
+        const align = this.getAttribute('align'); // "right" | null
+        const bg = this.getAttribute('bg');         // "dark" | "light"
+
+        const isRight = align === 'right';
+        const isDark = bg === 'dark';
+        
+
+        const buttonHTML = showButton && link && imageFile
+            ? `<a href="${link}"><img src="${imageFile}" class="social-media"/></a>`
+            : '';
+
+        this.innerHTML = `
+            <div class="member-section 
+            ${isRight ? 'align-right' : ''}
+            ${isDark ? 'bg-dark' : 'bg-light'}">
+            
+                <h2>${heading}</h2>
+                <p>
+                    ${details}
+                </p>
+                ${buttonHTML}
+                ${buttonHTML}
+            </div>`;
+    }
+}
+customElements.define('t-member', TMember);
 
 // main section
 class TMainSection extends HTMLElement {
@@ -64,13 +117,27 @@ class TCTA extends HTMLElement {
         const details = this.getAttribute('details');
         const link = this.getAttribute('link');
         const linkText = this.getAttribute('link-text');
+
+        const showButton = this.hasAttribute('show-button');
+        const showImage = this.hasAttribute('show-image');
+
+        const buttonHTML = showButton && link && linkText
+            ? `<a class="btn" href="${link}">${linkText}</a>`
+            : '';
+
+        const imageHTML = showImage && img
+            ? `<img src="${img}" alt="">`
+            : '';
+
         this.innerHTML = `
         <section class="center padding6">
             <h2>${heading}</h2>
             <p>
                 ${details}
             </p>
-            <a href="${link}" class="btn">${linkText}</a>
+            ${buttonHTML}
+        </div>
+            ${imageHTML}
         </section>`;
     }
 }

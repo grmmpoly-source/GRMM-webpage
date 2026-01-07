@@ -1,80 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GRMM Research Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+JP:wght@100..900&display=swap"
+      rel="stylesheet"
+      />
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <t-header></t-header>
+    <t-member
+    selector="flex margin6"
+    heading="Principal Investigator"
+    details="<strong>Pedro Cacciari, PhD</strong><br />
+    Assistant professor<br />
+    Department of Civil, Geological and Mining Engineering - Polytechnique Montréal<br />
+    Contact: pedro.cacciari@polymtl.ca"
+    bg="dark"
+    link="https://www.polymtl.ca/expertises/en/cacciari-pedro"
+    imageFile="img/Logo-Poly.png"
+    show-button
+    ></t-member>
+
     
-     <h3 class="member-section-title">Principal Investigator</h3>
 
-      <div style="padding-left: 2em;">
-        <h3>Pedro Cacciari, PhD</h3>
-        <p class="Job title">Assistant professor</p>
-        <p class="institution">Department of Civil, Geological and Mining Engineering - Polytechnique Montréal</p>
-        <p class="E-mail">Contact: pedro.cacciari@polymtl.ca</p>
+    <t-section
+    selector="flex margin6"
+    heading="Current Students"
+    details="<p>Lorenzo Zafrilla (M.Sc.)</p>
+    <p>2023–present</p>
+    <p><em>Water flow in fractured rock masses using 3D-printed DFN models</em></p>
+    <br />
+    <p>Gabriel Galdino de Magalhães (Ph.D.)</p>
+    <p>2024–present</p>
+    <p><em>Stope stability analysis using DFN-DEM modeling</em></p>
+    <br />
+    <p>Salim Hammoum (Ph.D.)</p>
+    <p>2025–present</p>
+    <p><em>Water flow and stability of underground excavations in deep permafrost</em></p>
+    <br />
+    <p>Bruno Osmar Gonzatto (Ph.D.)</p>
+    <p>2025–present</p>
+    <p><em>Mineralogical controls on the mechanical behavior of foliated rocks under tension and shear using DIC and AE</em></p>
+    <br />
+    <p>João Vitor de Abreu e Castro (M.Sc.)</p>
+    <p>2025–present</p>
+    <p><em>Numerical modeling of foliation planes across multiple scales</em></p>
+    <br />
+    <p>Pedro Magalhães Rocha (M.Sc.)</p>
+    <p>2025–present</p>
+    <p><em>Coupled hydromechanical stability analysis of mining crown pillars using the Finite-Discrete Element Method (FDEM)</em></p>
+    <br />
+    <p>Chaimae Tahori (M.Sc.)</p>
+    <p>2025–present</p>
+    <p><em>Assessing hydraulic connectivity between open pits and underground excavations using DFN modeling</em></p>
+    "
+    ></t-section>
 
-        <div style="display: flex; align-items: center; gap: 1em; margin-top: 0.5em;">
-          <a href="https://www.polymtl.ca/expertises/en/cacciari-pedro" target="_blank" rel="noopener noreferrer">
-            <img src="Logo-Poly.png" alt="Polytechnique Montréal" style="height: 40px;">
-          </a>
-          <a href="https://scholar.google.com/citations?user=l1BsnygAAAAJ&hl=pt-BR" target="_blank" rel="noopener noreferrer">
-            <img src="Logo-Google.png" alt="Google Scholar" style="height: 40px;">
-          </a>
-        </div>
-      </div>
+    <t-section
+    selector="flex margin6"
+    heading="Former Students"
+    details="<p><strong>Felipe Rosa (Ph.D. intern from PUC-Rio Brazil)</strong></p>
+    <br />
+    <p>2024–2025</p>
+    <p><em>Inference of rock mass permeability via DFN modeling and blackbox optimization</em></p>
+    <br />
+    <p><strong>Lucas B. Machado (Ph.D. intern from USP Brazil)</strong></p>
+    <br />
+    <p>2024–2025</p>
+    <p><em>Water infiltration in tunnels via LIDAR-DFN modeling and pipe network analysis</em></p>
+    "
+    ></t-section>
 
-      <h3 class="member-section-title">Current Students</h3>
+    <t-footer></t-footer>
 
-        <div style="padding-left: 2em;">
-          <p><strong>Lorenzo Zafrilla (M.Sc.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2023–present</p>
-          <p><em>Water flow in fractured rock masses using 3D-printed DFN models</em></p>
-        </div>
-        
-        <div style="padding-left: 2em;">
-          <p><strong>Gabriel Galdino de Magalhães (Ph.D.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2024–present</p>
-          <p><em>Stope stability analysis using DFN-DEM modeling</em></p>
-        </div>
-        
-        <div style="padding-left: 2em;">
-          <p><strong>Salim Hammoum (Ph.D.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2025–present</p>
-          <p><em>Water flow and stability of underground excavations in deep permafrost</em></p>
-        </div>
-        
-        <div style="padding-left: 2em;">
-          <p><strong>Bruno Osmar Gonzatto (Ph.D.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2025–present</p>
-          <p><em>Mineralogical controls on the mechanical behavior of foliated rocks under tension and shear using DIC and AE</em></p>
-        </div>
-        
-        <div style="padding-left: 2em;">
-          <p><strong>João Vitor de Abreu e Castro (M.Sc.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2025–present</p>
-          <p><em>Numerical modeling of foliation planes across multiple scales</em></p>
-        </div>
-        
-        <div style="padding-left: 2em;">
-          <p><strong>Pedro Magalhães Rocha (M.Sc.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2025–present</p>
-          <p><em>Coupled hydromechanical stability analysis of mining crown pillars using the Finite-Discrete Element Method (FDEM)</em></p>
-        </div>
-        
-        <div style="padding-left: 2em;">
-          <p><strong>Chaimae Tahori (M.Sc.)</strong></p>
-          <p style="color: gray; font-size: 1em;">2025–present</p>
-          <p><em>Assessing hydraulic connectivity between open pits and underground excavations using DFN modeling</em></p>
-        </div>
-
-
-      <h3 class="member-section-title">Former Students</h3>
-      
-      <div style="padding-left: 2em;">
-        <p><strong>Felipe Rosa (Ph.D. intern from PUC-Rio Brazil)</strong></p>
-        <p style="color: gray; font-size: 1em;">2024–2025</p>
-        <p><em>Inference of rock mass permeability via DFN modeling and blackbox optimization</em></p>
-      </div>
-
-      <div style="padding-left: 2em;">
-        <p><strong>Lucas B. Machado (Ph.D. intern from USP Brazil)</strong></p>
-        <p style="color: gray; font-size: 1em;">2024–2025</p>
-        <p><em>Water infiltration in tunnels via LIDAR-DFN modeling and pipe network analysis</em></p>
-      </div>
+    <script src="script.js"></script>
+  </body>
+</html>
 
 
 

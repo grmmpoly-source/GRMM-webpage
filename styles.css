@@ -242,6 +242,30 @@ nav {
   font: var(--h1);
 }
 
+/* member section */
+.member-section {
+  margin: var(--spacing5) auto var(--spacing5) auto;
+  text-align: left;
+  padding: var(--spacing3) var(--spacing5);
+  background: var(--bg-light);
+}
+/* Modifier */
+.member-section.align-right {
+  text-align: right;
+}
+/* Optional: align icon properly */
+.member-section.align-right .social-media {
+  margin-left: auto;
+}
+/* Background variants */
+.member-section.bg-light {
+  background: var(--bg-light);
+}
+
+.member-section.bg-dark {
+  background: var(--bg-dark);
+}
+
 /* footer */
 footer {
   background: var(--bg-light);
