@@ -262,8 +262,8 @@ nav {
   background: var(--bg-light);
 }
 
-.member-section.bg-dark {
-  background: var(--bg-dark);
+.member-section.bg {
+  background: var(--bg);
 }
 
 /* footer */

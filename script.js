@@ -60,35 +60,54 @@ customElements.define('t-section', TSection);
 // section members
 class TMember extends HTMLElement {
     connectedCallback() {
-        const selector = this.getAttribute('selector');
         const heading = this.getAttribute('heading');
         const details = this.getAttribute('details');
-        const link = this.getAttribute('link');
-        const imageFile = this.getAttribute('imageFile');
 
-        const showButton = this.hasAttribute('show-button');
         const align = this.getAttribute('align'); // "right" | null
         const bg = this.getAttribute('bg');         // "dark" | "light"
 
         const isRight = align === 'right';
-        const isDark = bg === 'dark';
-        
+        const islight = bg === 'light';
 
-        const buttonHTML = showButton && link && imageFile
-            ? `<a href="${link}"><img src="${imageFile}" class="social-media"/></a>`
-            : '';
+         // Parse buttons JSON safely
+        let buttons = [];
+        const buttonsAttr = this.getAttribute('buttons');
+        if (buttonsAttr) {
+        try {
+            const parsed = JSON.parse(buttonsAttr);
+            if (Array.isArray(parsed)) buttons = parsed;
+        } catch (e) {
+            console.warn('Invalid buttons JSON on <t-member>:', e);
+        }
+        }
+        
+        const buttonsHTML = buttons.length
+      ? `
+        <div class="social-buttons">
+          ${buttons
+            .filter(b => b && b.href && b.img)
+            .map(
+              b => `
+                <a href="${b.href}" target="_blank" rel="noopener noreferrer" class="icon-link">
+                  <img src="${b.img}" class="social-media" alt="${b.alt || ''}">
+                </a>
+              `
+            )
+            .join('')}
+        </div>
+      `
+      : '';
 
         this.innerHTML = `
             <div class="member-section 
             ${isRight ? 'align-right' : ''}
-            ${isDark ? 'bg-dark' : 'bg-light'}">
+            ${islight ? 'bg-light' : 'bg'}">
             
                 <h2>${heading}</h2>
                 <p>
                     ${details}
                 </p>
-                ${buttonHTML}
-                ${buttonHTML}
+                ${buttonsHTML}
             </div>`;
     }
 }
