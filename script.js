@@ -69,7 +69,12 @@ class TMember extends HTMLElement {
         const isRight = align === 'right';
         const islight = bg === 'light';
 
-         // Parse buttons JSON safely
+        // Optional heading
+        const headingHTML = heading
+        ? `<h2>${heading}</h2>`
+        : '';
+        
+        // Parse buttons JSON safely
         let buttons = [];
         const buttonsAttr = this.getAttribute('buttons');
         if (buttonsAttr) {
@@ -100,14 +105,13 @@ class TMember extends HTMLElement {
 
         this.innerHTML = `
             <div class="member-section 
-            ${isRight ? 'align-right' : ''}
+            ${isRight ? 'align-right' : 'align-left'}
             ${islight ? 'bg-light' : 'bg'}">
             
-                <h2>${heading}</h2>
-                <p>
-                    ${details}
-                </p>
+                ${headingHTML}
+                <p>${details}</p>
                 ${buttonsHTML}
+
             </div>`;
     }
 }
@@ -174,8 +178,14 @@ class TFooter extends HTMLElement {
                 <img class="logo" src="img/grmm-logo.jpg"/>
             </div>
             <div class="footer-right">
-                <img src="img/icons8-github.svg" class="social-media"/>
-                <img src="img/email-svgrepo-com.svg"  class="social-media" />
+                <a 
+                href="https://github.com/grmmpoly-source/GRMM-webpage.git" target="_blank" rel="noopener noreferrer">
+                <img src="img/icons8-github.svg" class="social-media" alt="GitHub" />
+                </a>
+                <a 
+                href="mailto:grmmpoly@gmail.com" target="_blank" rel="noopener noreferrer">
+                <img src="img/email-svgrepo-com.svg" class="social-media" alt="Email" />
+                </a>
             </div>
         </div>
         <div class="footer-bottom">

@@ -305,8 +305,12 @@ footer {
 }
 .footer-right{
   display: flex;
-  justify-content: space-between;
   gap: var(--spacing3);
+  justify-content: space-between;
+}
+.footer-right a {
+  display: inline-flex;
+  align-items: center;
 }
 .social-media {
   width: 32px;
