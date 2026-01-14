@@ -210,6 +210,7 @@ header {
   justify-content: space-between;
   position: relative;
   padding: var(--spacing4) 0;
+  padding-bottom: var(--spacing5); /* or any value you want */
 }
 
 nav {
@@ -244,8 +245,10 @@ nav {
 
 /* member section */
 .member-section {
-  margin: var(--spacing5) auto var(--spacing5) auto;
-  text-align: left;
+  margin: auto auto auto auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   padding: var(--spacing3) var(--spacing5);
   background: var(--bg-light);
 }
@@ -261,11 +264,24 @@ nav {
 .member-section.bg-light {
   background: var(--bg-light);
 }
-
 .member-section.bg {
   background: var(--bg);
 }
-
+.member-content {
+  flex: 1;
+}
+.member-section p {
+  margin: 0;
+}
+.member-section p + p {
+  margin-top: 0.5rem; /* optional spacing between lines */
+}
+/* photo sizing */
+.member-photo img {
+  width: 150px;
+  object-fit: cover;
+  border-radius: 50%; /* circle profile photo */
+}
 /* footer */
 footer {
   background: var(--bg-light);

@@ -66,6 +66,10 @@ class TMember extends HTMLElement {
         const align = this.getAttribute('align'); // "right" | null
         const bg = this.getAttribute('bg');         // "dark" | "light"
 
+        const profileImg = this.getAttribute('profile-img'); // optional
+        const profileAlt = this.getAttribute('profile-alt') || heading || 'Profile photo';
+        const profilePosition = this.getAttribute('profile-position') || 'right'; // "left" | "right"
+
         const isRight = align === 'right';
         const islight = bg === 'light';
 
@@ -102,16 +106,27 @@ class TMember extends HTMLElement {
         </div>
       `
       : '';
+      
+        const profileHTML = profileImg
+            ? `
+            <div class="member-photo member-photo-${profilePosition}">
+                <img src="${profileImg}" alt="${profileAlt}">
+            </div>
+            `
+            : '';
 
         this.innerHTML = `
             <div class="member-section 
             ${isRight ? 'align-right' : 'align-left'}
             ${islight ? 'bg-light' : 'bg'}">
-            
+
+            ${profilePosition === 'left' ? profileHTML : ''}
+            <div class="member-content">
                 ${headingHTML}
                 <p>${details}</p>
                 ${buttonsHTML}
-
+            </div>
+            ${profilePosition === 'right' ? profileHTML : ''}
             </div>`;
     }
 }
