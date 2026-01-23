@@ -3,7 +3,7 @@ class THeader extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <header>
-            <img class="logo" src="img/grmm-logo.jpg" />
+            <img class="logo" src="img/grmm-logo.png" />
             <img src="img/line-columns-svgrepo-com.svg" class="ham" />
             <nav>
                 <a href="index.html">Home</a>
@@ -190,7 +190,7 @@ class TFooter extends HTMLElement {
         <div class="footer-upper">
             <div class="footer-left">
                 <img class="logo" src="img/logo-exception-noir.png"/>
-                <img class="logo" src="img/grmm-logo.jpg"/>
+                <img class="logo" src="img/grmm-logo.png"/>
             </div>
             <div class="footer-right">
                 <a 
