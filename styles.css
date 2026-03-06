@@ -124,7 +124,7 @@ a:hover {
   cursor: pointer;
 }
 .btn:hover, button:hover {
-  background: linear-gradient(180deg, var(--bg-light), var(--bg-dark));
+  background: linear-gradient(180deg, var(--bg-light), var(--bg-light));
   transition: 0.3s ease-in-out;
 }
 img {
@@ -281,6 +281,20 @@ nav {
   width: 150px;
   object-fit: cover;
   border-radius: 50%; /* circle profile photo */
+}
+.member-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: var(--spacing3);
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.research-photo img {
+  width: 400px;
+  object-fit: cover;
+  padding-right: var(--spacing4);
+  border-radius: 0%; /* circle profile photo */
 }
 /* footer */
 footer {

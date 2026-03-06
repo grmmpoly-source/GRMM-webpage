@@ -7,11 +7,10 @@ class THeader extends HTMLElement {
             <img src="img/line-columns-svgrepo-com.svg" class="ham" />
             <nav>
                 <a href="index.html">Home</a>
-                <a href="index.html">About GRMM</a>
-                <a href="#">Research</a>
+                <a href="research.html">Research</a>
                 <a href="members.html">Members</a>
                 <a href="publications.html">Publications</a>
-                <a href="#">Teaching</a>
+                <a href="teaching.html">Teaching</a>
             </nav>
         </header>
         `;
@@ -67,16 +66,22 @@ class TMember extends HTMLElement {
         const bg = this.getAttribute('bg');         // "dark" | "light"
 
         const profileImg = this.getAttribute('profile-img'); // optional
+
+        const profileImgClass = this.getAttribute('class-member-photo')
+
         const profileAlt = this.getAttribute('profile-alt') || heading || 'Profile photo';
         const profilePosition = this.getAttribute('profile-position') || 'right'; // "left" | "right"
+
+        const headingLayout = this.getAttribute('heading-layout') || 'normal'; 
+    // "normal" | "aside"
 
         const isRight = align === 'right';
         const islight = bg === 'light';
 
         // Optional heading
-        const headingHTML = heading
-        ? `<h2>${heading}</h2>`
-        : '';
+        //const headingHTML = heading
+        //? `<h2>${heading}</h2>`
+        //: '';
         
         // Parse buttons JSON safely
         let buttons = [];
@@ -90,10 +95,8 @@ class TMember extends HTMLElement {
         }
         }
         
-        const buttonsHTML = buttons.length
-      ? `
-        <div class="social-buttons">
-          ${buttons
+        const buttonsOnlyHTML = buttons.length
+      ? buttons
             .filter(b => b && b.href && b.img)
             .map(
               b => `
@@ -102,14 +105,33 @@ class TMember extends HTMLElement {
                 </a>
               `
             )
-            .join('')}
-        </div>
-      `
+            .join('')
       : '';
+
+      const buttonsHTML = buttonsOnlyHTML
+      ? `<div class="social-buttons">${buttonsOnlyHTML}</div>`
+      : '';
+
+      // Heading block: normal or with buttons aside
+        let headingHTML = '';
+        if (heading) {
+        if (headingLayout === 'aside' && buttonsOnlyHTML) {
+            headingHTML = `
+            <div class="member-heading-row">
+                <h2>${heading}</h2>
+                <div class="social-buttons heading-buttons">
+                ${buttonsOnlyHTML}
+                </div>
+            </div>
+            `;
+        } else {
+            headingHTML = `<h2>${heading}</h2>`;
+        }
+        }
       
         const profileHTML = profileImg
             ? `
-            <div class="member-photo member-photo-${profilePosition}">
+            <div class="${profileImgClass || 'member-photo'} member-photo-${profilePosition}">
                 <img src="${profileImg}" alt="${profileAlt}">
             </div>
             `
@@ -124,7 +146,7 @@ class TMember extends HTMLElement {
             <div class="member-content">
                 ${headingHTML}
                 <p>${details}</p>
-                ${buttonsHTML}
+                ${headingLayout !== 'aside' ? buttonsHTML : ''}
             </div>
             ${profilePosition === 'right' ? profileHTML : ''}
             </div>`;
