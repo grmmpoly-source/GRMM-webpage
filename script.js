@@ -1,249 +1,673 @@
-// header
+// Shared GRMM components
+
 class THeader extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = `
-        <header>
-            <img class="logo" src="img/grmm-logo.png" />
-            <img src="img/line-columns-svgrepo-com.svg" class="ham" />
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="research.html">Research</a>
-                <a href="members.html">Members</a>
-                <a href="publications.html">Publications</a>
-                <a href="teaching.html">Teaching</a>
-            </nav>
-        </header>
-        `;
+  connectedCallback() {
+    const currentPage =
+      window.location.pathname.split("/").pop() || "index.html";
+
+    const pages = [
+      ["index.html", "Home"],
+      ["research.html", "Research"],
+      ["members.html", "Members"],
+      ["publications.html", "Publications"],
+      ["teaching.html", "Teaching"]
+    ];
+
+    const links = pages
+      .map(
+        ([href, label]) =>
+          `<a href="${href}"${
+            href === currentPage
+              ? ' class="active" aria-current="page"'
+              : ""
+          }>${label}</a>`
+      )
+      .join("");
+
+    this.innerHTML = `
+      <header>
+        <a class="brand" href="index.html" aria-label="GRMM home">
+          <img
+            class="logo"
+            src="img/grmm-logo.png"
+            alt="GRMM Research Group logo"
+          >
+        </a>
+
+        <button
+          class="ham"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+        >
+          <img
+            src="img/line-columns-svgrepo-com.svg"
+            alt=""
+            aria-hidden="true"
+          >
+        </button>
+
+        <nav aria-label="Primary navigation">
+            ${links}
+
+            <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Switch to light mode"
+            title="Switch theme"
+            >
+                ☀
+            </button>
+        </nav>
+      </header>
+    `;
+
+    const button = this.querySelector(".ham");
+    const icon = button.querySelector("img");
+    const nav = this.querySelector("nav");
+
+    const themeToggle = this.querySelector(".theme-toggle");
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+    document.body.classList.add("light");
     }
+
+    const updateThemeButton = () => {
+    const isLight = document.body.classList.contains("light");
+
+    themeToggle.textContent = isLight ? "☾" : "☀";
+
+    themeToggle.setAttribute(
+        "aria-label",
+        isLight
+        ? "Switch to dark mode"
+        : "Switch to light mode"
+    );
+    };
+
+    updateThemeButton();
+
+    themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+
+    const isLight =
+        document.body.classList.contains("light");
+
+    localStorage.setItem(
+        "theme",
+        isLight ? "light" : "dark"
+    );
+
+    updateThemeButton();
+    });
+
+    const closeMenu = () => {
+      nav.classList.remove("show");
+
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute(
+        "aria-label",
+        "Open navigation menu"
+      );
+
+      icon.src = "img/line-columns-svgrepo-com.svg";
+    };
+
+    button.addEventListener("click", () => {
+      const open = nav.classList.toggle("show");
+
+      button.setAttribute(
+        "aria-expanded",
+        String(open)
+      );
+
+      button.setAttribute(
+        "aria-label",
+        open
+          ? "Close navigation menu"
+          : "Open navigation menu"
+      );
+
+      icon.src = open
+        ? "img/close-bold-svgrepo-com.svg"
+        : "img/line-columns-svgrepo-com.svg";
+    });
+
+    nav.addEventListener("click", (e) => {
+      if (e.target.closest("a")) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 800) {
+        closeMenu();
+      }
+    });
+  }
 }
 
-// <a class="btn" href="#">Get a Quote</a>
+customElements.define("t-header", THeader);
 
-customElements.define('t-header', THeader);
 
-// section
+// ======================================================
+// STANDARD SECTION
+// ======================================================
+
 class TSection extends HTMLElement {
-    connectedCallback() {
-        const selector = this.getAttribute('selector');
-        const heading = this.getAttribute('heading');
-        const details = this.getAttribute('details');
-        const link = this.getAttribute('link');
-        const linkText = this.getAttribute('link-text');
-        const img = this.getAttribute('img');
+  connectedCallback() {
 
-        const showButton = this.hasAttribute('show-button');
-        const showImage = this.hasAttribute('show-image');
+    const selector =
+      this.getAttribute("selector") || "";
 
-        const buttonHTML = showButton && link && linkText
-            ? `<a class="btn" href="${link}">${linkText}</a>`
-            : '';
+    const heading =
+      this.getAttribute("heading") || "";
 
-        const imageHTML = showImage && img
-            ? `<img src="${img}" alt="">`
-            : '';
+    const details =
+      this.getAttribute("details") || "";
 
-        this.innerHTML = `<section class="${selector}">
-            <div class="primary">
-                <h2>${heading}</h2>
-                <p>
-                    ${details}
-                </p>
-                ${buttonHTML}
-            </div>
-            ${imageHTML}
-        </section>`;
-    }
+    const link =
+      this.getAttribute("link");
+
+    const linkText =
+      this.getAttribute("link-text");
+
+    const img =
+      this.getAttribute("img");
+
+    // Check if the section should be reversed
+    const reverse =
+      this.hasAttribute("reverse");
+
+    // Add "reverse" to the section classes when requested
+    const sectionClasses = `
+      ${selector}
+      ${reverse ? "reverse" : ""}
+    `;
+
+
+    // -----------------------------
+    // Button
+    // -----------------------------
+
+    const buttonHTML =
+      this.hasAttribute("show-button") &&
+      link &&
+      linkText
+        ? `
+          <a class="btn" href="${link}">
+            ${linkText}
+          </a>
+        `
+        : "";
+
+
+    // -----------------------------
+    // Image
+    // -----------------------------
+
+    const imageHTML =
+      this.hasAttribute("show-image") &&
+      img
+        ? `
+          <img
+            src="${img}"
+            alt="${heading}"
+            loading="lazy"
+          >
+        `
+        : "";
+
+
+    // -----------------------------
+    // Render section
+    // -----------------------------
+
+    this.innerHTML = `
+      <section class="${sectionClasses}">
+
+        <div class="primary">
+
+          <h2>
+            ${heading}
+          </h2>
+
+          <div class="section-details">
+            ${details}
+          </div>
+
+          ${buttonHTML}
+
+        </div>
+
+        ${imageHTML}
+
+      </section>
+    `;
+  }
 }
-customElements.define('t-section', TSection);
 
-// section members
+customElements.define(
+  "t-section",
+  TSection
+);
+
+
+// ======================================================
+// MEMBER / CONTENT SECTION
+// ======================================================
+
 class TMember extends HTMLElement {
-    connectedCallback() {
-        const heading = this.getAttribute('heading');
-        const details = this.getAttribute('details');
+  connectedCallback() {
+    const heading =
+      this.getAttribute("heading");
 
-        const align = this.getAttribute('align'); // "right" | null
-        const bg = this.getAttribute('bg');         // "dark" | "light"
+    const details =
+      this.getAttribute("details") || "";
 
-        const profileImg = this.getAttribute('profile-img'); // optional
+    const align =
+      this.getAttribute("align");
 
-        const profileImgClass = this.getAttribute('class-member-photo')
+    const bg =
+      this.getAttribute("bg");
 
-        const profileAlt = this.getAttribute('profile-alt') || heading || 'Profile photo';
-        const profilePosition = this.getAttribute('profile-position') || 'right'; // "left" | "right"
+    const profileImg =
+      this.getAttribute("profile-img");
 
-        const headingLayout = this.getAttribute('heading-layout') || 'normal'; 
-    // "normal" | "aside"
+    const photoClass =
+      this.getAttribute("class-member-photo") ||
+      "member-photo";
 
-        const isRight = align === 'right';
-        const islight = bg === 'light';
+    const profileAlt =
+      this.getAttribute("profile-alt") ||
+      heading ||
+      "Profile photo";
 
-        // Optional heading
-        //const headingHTML = heading
-        //? `<h2>${heading}</h2>`
-        //: '';
-        
-        // Parse buttons JSON safely
-        let buttons = [];
-        const buttonsAttr = this.getAttribute('buttons');
-        if (buttonsAttr) {
-        try {
-            const parsed = JSON.parse(buttonsAttr);
-            if (Array.isArray(parsed)) buttons = parsed;
-        } catch (e) {
-            console.warn('Invalid buttons JSON on <t-member>:', e);
+    const profilePosition =
+      this.getAttribute("profile-position") ||
+      "right";
+
+    const headingLayout =
+      this.getAttribute("heading-layout") ||
+      "normal";
+
+
+    // --------------------------------------------------
+    // Parse social/link buttons
+    // --------------------------------------------------
+
+    let buttons = [];
+
+    const rawButtons =
+      this.getAttribute("buttons");
+
+    if (rawButtons) {
+      try {
+        const parsed = JSON.parse(rawButtons);
+
+        if (Array.isArray(parsed)) {
+          buttons = parsed;
         }
-        }
-        
-        const buttonsOnlyHTML = buttons.length
-      ? buttons
-            .filter(b => b && b.href && b.img)
-            .map(
-              b => `
-                <a href="${b.href}" target="_blank" rel="noopener noreferrer" class="icon-link">
-                  <img src="${b.img}" class="social-media" alt="${b.alt || ''}">
-                </a>
-              `
-            )
-            .join('')
-      : '';
+      } catch (error) {
+        console.warn(
+          "Invalid buttons JSON on <t-member>:",
+          error
+        );
+      }
+    }
 
-      const buttonsHTML = buttonsOnlyHTML
-      ? `<div class="social-buttons">${buttonsOnlyHTML}</div>`
-      : '';
 
-      // Heading block: normal or with buttons aside
-        let headingHTML = '';
-        if (heading) {
-        if (headingLayout === 'aside' && buttonsOnlyHTML) {
-            headingHTML = `
+    // --------------------------------------------------
+    // Generate icons
+    // --------------------------------------------------
+
+    const icons = buttons
+      .filter(
+        (b) =>
+          b &&
+          b.href &&
+          b.img
+      )
+      .map(
+        (b) => `
+          <a
+            href="${b.href}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="icon-link"
+            aria-label="${b.alt || "External link"}"
+          >
+            <img
+              src="${b.img}"
+              class="social-media"
+              alt=""
+              aria-hidden="true"
+            >
+          </a>
+        `
+      )
+      .join("");
+
+
+    const socialHTML = icons
+      ? `
+        <div class="social-buttons">
+          ${icons}
+        </div>
+      `
+      : "";
+
+
+    // --------------------------------------------------
+    // Heading
+    // --------------------------------------------------
+
+    let headingHTML = "";
+
+    if (heading) {
+      headingHTML =
+        headingLayout === "aside" && icons
+          ? `
             <div class="member-heading-row">
-                <h2>${heading}</h2>
-                <div class="social-buttons heading-buttons">
-                ${buttonsOnlyHTML}
-                </div>
-            </div>
-            `;
-        } else {
-            headingHTML = `<h2>${heading}</h2>`;
-        }
-        }
-      
-        const profileHTML = profileImg
-            ? `
-            <div class="${profileImgClass || 'member-photo'} member-photo-${profilePosition}">
-                <img src="${profileImg}" alt="${profileAlt}">
-            </div>
-            `
-            : '';
 
-        this.innerHTML = `
-            <div class="member-section 
-            ${isRight ? 'align-right' : 'align-left'}
-            ${islight ? 'bg-light' : 'bg'}">
+              <h2>
+                ${heading}
+              </h2>
 
-            ${profilePosition === 'left' ? profileHTML : ''}
-            <div class="member-content">
-                ${headingHTML}
-                <p>${details}</p>
-                ${headingLayout !== 'aside' ? buttonsHTML : ''}
+              <div
+                class="social-buttons heading-buttons"
+              >
+                ${icons}
+              </div>
+
             </div>
-            ${profilePosition === 'right' ? profileHTML : ''}
-            </div>`;
+          `
+          : `
+            <h2>
+              ${heading}
+            </h2>
+          `;
     }
-}
-customElements.define('t-member', TMember);
 
-// main section
+
+    // --------------------------------------------------
+    // Profile / research image
+    // --------------------------------------------------
+
+    const photoHTML = profileImg
+      ? `
+        <div
+          class="${photoClass}
+          member-photo-${profilePosition}"
+        >
+          <img
+            src="${profileImg}"
+            alt="${profileAlt}"
+            loading="lazy"
+          >
+        </div>
+      `
+      : "";
+
+
+    // --------------------------------------------------
+    // Render member section
+    // --------------------------------------------------
+
+    this.innerHTML = `
+      <section
+        class="
+          member-section
+          ${
+            align === "right"
+              ? "align-right"
+              : "align-left"
+          }
+          ${
+            bg === "light"
+              ? "bg-light"
+              : "bg"
+          }
+        "
+      >
+
+        ${
+          profilePosition === "left"
+            ? photoHTML
+            : ""
+        }
+
+        <div class="member-content">
+
+          ${headingHTML}
+
+          <div class="member-details">
+            ${details}
+          </div>
+
+          ${
+            headingLayout !== "aside"
+              ? socialHTML
+              : ""
+          }
+
+        </div>
+
+        ${
+          profilePosition === "right"
+            ? photoHTML
+            : ""
+        }
+
+      </section>
+    `;
+  }
+}
+
+customElements.define("t-member", TMember);
+
+
+// ======================================================
+// MAIN SECTION
+// ======================================================
+
 class TMainSection extends HTMLElement {
-    connectedCallback() {
-        const heading = this.getAttribute('heading');
-        const details = this.getAttribute('details');
-        this.innerHTML = `
-        <div class="main-section">
-            <h2>${heading}</h2>
-            <p>
-                ${details}
-            </p>
-        </div>`;
-    }
-}
-customElements.define('t-main-section', TMainSection);
+  connectedCallback() {
+    const heading =
+      this.getAttribute("heading") || "";
 
-// CTA
+    const details =
+      this.getAttribute("details") || "";
+
+    const link =
+      this.getAttribute("link");
+
+    const linkText =
+      this.getAttribute("link-text");
+
+    const buttonHTML =
+      this.hasAttribute("show-button") &&
+      link &&
+      linkText
+        ? `
+          <a class="btn" href="${link}">
+            ${linkText}
+          </a>
+        `
+        : "";
+
+    this.innerHTML = `
+      <section class="main-section">
+
+        <h2>
+          ${heading}
+        </h2>
+
+        <p>
+          ${details}
+        </p>
+
+        ${buttonHTML}
+
+      </section>
+    `;
+  }
+}
+
+customElements.define(
+  "t-main-section",
+  TMainSection
+);
+
+
+// ======================================================
+// CALL TO ACTION
+// ======================================================
+
 class TCTA extends HTMLElement {
-    connectedCallback() {
-        const heading = this.getAttribute('heading');
-        const details = this.getAttribute('details');
-        const link = this.getAttribute('link');
-        const linkText = this.getAttribute('link-text');
+  connectedCallback() {
+    const heading =
+      this.getAttribute("heading") || "";
 
-        const showButton = this.hasAttribute('show-button');
-        const showImage = this.hasAttribute('show-image');
+    const details =
+      this.getAttribute("details") || "";
 
-        const buttonHTML = showButton && link && linkText
-            ? `<a class="btn" href="${link}">${linkText}</a>`
-            : '';
+    const link =
+      this.getAttribute("link");
 
-        const imageHTML = showImage && img
-            ? `<img src="${img}" alt="">`
-            : '';
+    const linkText =
+      this.getAttribute("link-text");
 
-        this.innerHTML = `
-        <section class="center padding6">
-            <h2>${heading}</h2>
-            <p>
-                ${details}
-            </p>
-            ${buttonHTML}
-        </div>
-            ${imageHTML}
-        </section>`;
-    }
+
+    const buttonHTML =
+      this.hasAttribute("show-button") &&
+      link &&
+      linkText
+        ? `
+          <a
+            class="btn"
+            href="${link}"
+          >
+            ${linkText}
+          </a>
+        `
+        : "";
+
+
+    this.innerHTML = `
+      <section
+        class="center padding6 cta-section"
+      >
+
+        <h2>
+          ${heading}
+        </h2>
+
+        <p>
+          ${details}
+        </p>
+
+        ${buttonHTML}
+
+      </section>
+    `;
+  }
 }
-customElements.define('t-cta', TCTA);
 
-// footer
+customElements.define(
+  "t-cta",
+  TCTA
+);
+
+
+// ======================================================
+// FOOTER
+// ======================================================
+
 class TFooter extends HTMLElement {
-    connectedCallback() {
-        this.innerHTML = `
-        <footer>
-        <div class="footer">
-        <div class="footer-upper">
-            <div class="footer-left">
-                <img class="logo" src="img/logo-exception-noir.png"/>
-                <img class="logo" src="img/grmm-logo.png"/>
-            </div>
-            <div class="footer-right">
-                <a 
-                href="https://github.com/grmmpoly-source/GRMM-webpage.git" target="_blank" rel="noopener noreferrer">
-                <img src="img/icons8-github.svg" class="social-media" alt="GitHub" />
-                </a>
-                <a 
-                href="mailto:grmmpoly@gmail.com" target="_blank" rel="noopener noreferrer">
-                <img src="img/email-svgrepo-com.svg" class="social-media" alt="Email" />
-                </a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>
-                © 2024 Geomechanics & Rock Mass Modeling Research Group (GRMM). All rights reserved.
-            </p>
-            </div>     
-        </div>
-    </footer>`;
-    }
-}
-customElements.define('t-footer', TFooter);
+  connectedCallback() {
+    this.innerHTML = `
+      <footer id="contact">
 
-// hamburger
-const ham = document.querySelector(".ham");
-const nav = document.querySelector("nav");
-ham.addEventListener("click", toggle);
-nav.addEventListener("click", toggle);
-function toggle() {
-  ham.src = ham.src.includes("img/close-bold-svgrepo-com.svg")
-    ? "img/line-columns-svgrepo-com.svg"
-    : "img/close-bold-svgrepo-com.svg";
-  nav.classList.toggle("show");
+        <div class="footer">
+
+          <div class="footer-upper">
+
+            <div class="footer-left">
+
+              <img
+                class="logo"
+                src="img/logo-exception-noir.png"
+                alt="Polytechnique Montréal logo"
+              >
+
+              <img
+                class="logo"
+                src="img/grmm-logo.png"
+                alt="GRMM Research Group logo"
+              >
+
+            </div>
+
+
+            <div
+              class="footer-right"
+              aria-label="Contact links"
+            >
+
+              <a
+                href="https://github.com/grmmpoly-source/GRMM-webpage.git"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GRMM GitHub repository"
+              >
+                <img
+                  src="img/icons8-github.svg"
+                  class="social-media"
+                  alt=""
+                  aria-hidden="true"
+                >
+              </a>
+
+
+              <a
+                href="mailto:grmmpoly@gmail.com"
+                aria-label="Email GRMM"
+              >
+                <img
+                  src="img/email-svgrepo-com.svg"
+                  class="social-media"
+                  alt=""
+                  aria-hidden="true"
+                >
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <div class="footer-bottom">
+
+            <p>
+              © 2026 Geomechanics & Rock Mass Modeling
+              Research Group (GRMM).
+              All rights reserved.
+            </p>
+
+          </div>
+
+        </div>
+
+      </footer>
+    `;
+  }
 }
+
+customElements.define(
+  "t-footer",
+  TFooter
+);
