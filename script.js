@@ -619,7 +619,7 @@ class TFooter extends HTMLElement {
             >
 
               <a
-                href="https://github.com/grmmpoly-source/GRMM-webpage.git"
+                href="https://github.com/grmmpoly"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GRMM GitHub repository"
