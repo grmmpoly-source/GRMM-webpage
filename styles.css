@@ -364,6 +364,22 @@ nav {
   padding-right: var(--spacing4);
   border-radius: 0%; /* circle profile photo */
 }
+/* Publication cards */
+.publication-card {
+  border: 1px solid var(--border);
+  border-radius: var(--spacing2);
+
+  margin-bottom: var(--spacing3);
+  padding: var(--spacing4);
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+.publication-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
 /* footer */
 footer {
   background: var(--bg-light);

@@ -294,6 +294,9 @@ class TMember extends HTMLElement {
       this.getAttribute("heading-layout") ||
       "normal";
 
+    const isPublication =
+      this.hasAttribute("publication");
+
 
     // --------------------------------------------------
     // Parse social/link buttons
@@ -431,6 +434,10 @@ class TMember extends HTMLElement {
               ? "bg-light"
               : "bg"
           }
+          ${
+            isPublication 
+            ? "publication-card" 
+            : ""}
         "
       >
 
